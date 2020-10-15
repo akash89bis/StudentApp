@@ -1,8 +1,10 @@
-package com.example.studentapp;
+package com.example.studentapp.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.studentapp.R;
 
 import dagger.android.support.DaggerAppCompatActivity;
 
