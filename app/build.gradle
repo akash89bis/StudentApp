@@ -24,6 +24,7 @@ android {
 }
 
 def daggerVersion = '2.22'
+def lifecycleExtensionVersion = '1.1.1'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -44,4 +45,6 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$daggerVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
     annotationProcessor "com.google.dagger:dagger-android-processor:$daggerVersion"
+
+    implementation "android.arch.lifecycle:extensions:$lifecycleExtensionVersion"
 }
