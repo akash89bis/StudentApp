@@ -6,6 +6,7 @@ import com.example.studentapp.base.BaseApplication;
 import com.example.studentapp.di.module.ActivityBuildersModule;
 import com.example.studentapp.di.module.FragmentBuildersModule;
 import com.example.studentapp.di.module.ViewModelFactoryModule;
+import com.example.studentapp.di.module.ViewModelModule;
 
 import dagger.BindsInstance;
 import dagger.Component;
@@ -17,7 +18,8 @@ import dagger.android.support.AndroidSupportInjectionModule;
         AndroidSupportInjectionModule.class,
         ActivityBuildersModule.class,
         FragmentBuildersModule.class,
-        ViewModelFactoryModule.class
+        ViewModelFactoryModule.class,
+        ViewModelModule.class
 })
 public interface AppComponent extends AndroidInjector<BaseApplication> {
 
