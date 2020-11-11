@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -32,6 +34,12 @@ public class HomeFragment extends DaggerFragment {
 
     private Spinner spinnerCity;
     private Spinner spinnerState;
+
+    private EditText edt_first_name;
+    private EditText edt_email;
+    private EditText edt_last_name;
+    private EditText edt_phone;
+    private Button btnSubmit;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -66,6 +74,18 @@ public class HomeFragment extends DaggerFragment {
             @Override
             public void onChanged(List<String> state) {
                 spinnerState.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, state));
+            }
+        });
+
+        edt_first_name = root.findViewById(R.id.edt_first_name);
+        edt_email = root.findViewById(R.id.edt_email);
+        edt_last_name = root.findViewById(R.id.edt_last_name);
+        edt_phone = root.findViewById(R.id.edt_phone);
+        btnSubmit = root.findViewById(R.id.button);
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                homeViewModel.makePostApiCall(edt_first_name.getText().toString(), edt_last_name.getText().toString(), edt_email.getText().toString(), edt_phone.getText().toString());
             }
         });
     }
