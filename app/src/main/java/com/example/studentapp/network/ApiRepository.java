@@ -5,7 +5,7 @@ import com.example.studentapp.model.StudentDetailsRequest;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
+import io.reactivex.Single;
 
 public class ApiRepository {
 
@@ -16,7 +16,7 @@ public class ApiRepository {
         this.api = repoService;
     }
 
-    public Observable<JsonResponse> addStudentData(StudentDetailsRequest request){
+    public Single<JsonResponse> addStudentData(StudentDetailsRequest request){
         return api.addStudentData(request);
     }
 }
