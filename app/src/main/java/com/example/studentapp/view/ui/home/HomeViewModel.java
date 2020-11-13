@@ -30,7 +30,9 @@ public class HomeViewModel extends ViewModel {
 
     private ApiRepository apiRepository;
     private CompositeDisposable disposable;
-    private StudentDetailsRequest request;
+
+    @Inject
+    StudentDetailsRequest request;
 
     @Inject
     public HomeViewModel(ApiRepository apiRepository) {
@@ -69,7 +71,6 @@ public class HomeViewModel extends ViewModel {
     }
 
     public void makePostApiCall(String fName, String lName, String email, String phone){
-        request = new StudentDetailsRequest();
         request.setFirstName(fName);
         request.setLastName(lName);
         request.setEmail(email);
