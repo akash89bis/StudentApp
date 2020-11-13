@@ -17,7 +17,7 @@ import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.observers.DisposableObserver;
+import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class HomeViewModel extends ViewModel {
@@ -80,21 +80,16 @@ public class HomeViewModel extends ViewModel {
                 apiRepository.addStudentData(request)
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeWith(new DisposableObserver<JsonResponse>() {
+                        .subscribeWith(new DisposableSingleObserver<JsonResponse>() {
 
                             @Override
-                            public void onNext(JsonResponse jsonResponse) {
-                                Log.e(TAG, "onNext: "+ jsonResponse );
+                            public void onSuccess(JsonResponse jsonResponse) {
+                                Log.e(TAG, "onSuccess: " + jsonResponse );
                             }
 
                             @Override
                             public void onError(Throwable e) {
-                                Log.e(TAG, "onError: "+ e );
-                            }
-
-                            @Override
-                            public void onComplete() {
-                                Log.e(TAG, "onComplete: " );
+                                Log.e(TAG, "onError: "+e );
                             }
                         })
         );
