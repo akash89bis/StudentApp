@@ -25,6 +25,8 @@ android {
 
 def daggerVersion = '2.22'
 def lifecycleExtensionVersion = '1.1.1'
+def retrofitVersion = '2.3.0'
+def rxJavaVersion = '2.1.1'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -47,4 +49,11 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-android-processor:$daggerVersion"
 
     implementation "android.arch.lifecycle:extensions:$lifecycleExtensionVersion"
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+
+    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxJavaVersion"
 }

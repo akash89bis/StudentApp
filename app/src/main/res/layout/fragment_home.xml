@@ -30,12 +30,11 @@
         app:layout_constraintTop_toBottomOf="@+id/text_home" />
 
     <EditText
-        android:id="@+id/edt_middle_name"
+        android:id="@+id/edt_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textNoSuggestions"
-        android:hint="Middle name(optional)"
+        android:hint="email"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         app:layout_constraintTop_toBottomOf="@+id/edt_first_name"
         app:layout_constraintEnd_toEndOf="@+id/edt_first_name" />
@@ -48,8 +47,19 @@
         android:importantForAutofill="no"
         android:hint="Enter last name"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
-        app:layout_constraintTop_toBottomOf="@+id/edt_middle_name"
-        app:layout_constraintEnd_toEndOf="@+id/edt_middle_name" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_email"
+        app:layout_constraintEnd_toEndOf="@+id/edt_email" />
+
+    <EditText
+        android:id="@+id/edt_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        android:hint="Enter phn. no."
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        app:layout_constraintTop_toBottomOf="@+id/edt_last_name"
+        app:layout_constraintEnd_toEndOf="@+id/edt_last_name" />
 
     <RadioGroup
         android:id="@+id/rdo_group"
@@ -58,7 +68,7 @@
         android:layout_marginTop="32dp"
         android:orientation="horizontal"
         app:layout_constraintStart_toEndOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/edt_last_name">
+        app:layout_constraintTop_toBottomOf="@+id/edt_phone">
 
         <RadioButton
             android:id="@+id/rdo_male"

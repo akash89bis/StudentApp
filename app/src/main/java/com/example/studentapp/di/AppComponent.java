@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.example.studentapp.base.BaseApplication;
 import com.example.studentapp.di.module.ActivityBuildersModule;
-import com.example.studentapp.di.module.FragmentBuildersModule;
+import com.example.studentapp.di.module.AppModule;
 import com.example.studentapp.di.module.ViewModelFactoryModule;
 import com.example.studentapp.di.module.ViewModelModule;
 
@@ -17,9 +17,9 @@ import dagger.android.support.AndroidSupportInjectionModule;
 @Component(modules = {
         AndroidSupportInjectionModule.class,
         ActivityBuildersModule.class,
-        FragmentBuildersModule.class,
+        AppModule.class,
         ViewModelFactoryModule.class,
-        ViewModelModule.class
+        ViewModelModule.class,
 })
 public interface AppComponent extends AndroidInjector<BaseApplication> {
 
