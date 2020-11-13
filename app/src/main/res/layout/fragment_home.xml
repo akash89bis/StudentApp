@@ -66,6 +66,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:visibility="gone"
         android:orientation="horizontal"
         app:layout_constraintStart_toEndOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/edt_phone">
@@ -105,6 +106,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="Select city"
+        android:visibility="gone"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/txt_state"
         app:layout_constraintStart_toEndOf="@+id/guideline"
@@ -114,6 +116,7 @@
         android:id="@+id/spinner"
         style="@style/spinner_style"
         android:spinnerMode="dropdown"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/txt_city"
         app:layout_constraintStart_toStartOf="@+id/spinner_state" />
 
@@ -123,6 +126,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="Select state"
+        android:visibility="gone"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/txt_city" />
@@ -130,6 +134,7 @@
     <Spinner
         android:id="@+id/spinner_state"
         android:spinnerMode="dropdown"
+        android:visibility="gone"
         style="@style/spinner_style"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
@@ -147,5 +152,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/text_home"
+        android:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

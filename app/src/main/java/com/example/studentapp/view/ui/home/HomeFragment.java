@@ -1,12 +1,14 @@
 package com.example.studentapp.view.ui.home;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -17,8 +19,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.studentapp.R;
 import com.example.studentapp.factory.ViewModelFactory;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.inject.Inject;
 
@@ -40,6 +45,9 @@ public class HomeFragment extends DaggerFragment {
     private EditText edt_last_name;
     private EditText edt_phone;
     private Button btnSubmit;
+    private ProgressBar progressBar;
+    private final int DELAY = 2000;
+    private static final String TAG = "HomeFragment";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -82,10 +90,43 @@ public class HomeFragment extends DaggerFragment {
         edt_last_name = root.findViewById(R.id.edt_last_name);
         edt_phone = root.findViewById(R.id.edt_phone);
         btnSubmit = root.findViewById(R.id.button);
+        progressBar = root.findViewById(R.id.progressBar);
+
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                homeViewModel.makePostApiCall(edt_first_name.getText().toString(), edt_last_name.getText().toString(), edt_email.getText().toString(), edt_phone.getText().toString());
+                btnSubmit.setEnabled(false);
+                progressBar.setVisibility(View.VISIBLE);
+                Log.e(TAG, "button clicked --- " );
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        homeViewModel.makePostApiCall(edt_first_name.getText().toString(),
+                                edt_last_name.getText().toString(), edt_email.getText().toString(),
+                                edt_phone.getText().toString());
+                    }
+                }, DELAY);
+
+            }
+        });
+
+        homeViewModel.getSuccessLiveData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                progressBar.setVisibility(View.GONE);
+                btnSubmit.setEnabled(true);
+                Snackbar.make(getView(), "Data inserted successfully !", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+        homeViewModel.getErrorLiveData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                progressBar.setVisibility(View.GONE);
+                btnSubmit.setEnabled(true);
+                Snackbar.make(getView(), "Error occurred, Try Again later !", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         });
     }

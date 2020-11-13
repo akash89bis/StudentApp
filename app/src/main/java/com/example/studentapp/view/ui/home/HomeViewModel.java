@@ -25,6 +25,8 @@ public class HomeViewModel extends ViewModel {
     private MutableLiveData<String> mText;
     private MutableLiveData<List<String>> cityList;
     private MutableLiveData<List<String>> stateList;
+    private MutableLiveData<Boolean> successLiveData;
+    private MutableLiveData<Boolean> errorLiveData;
 
     private static final String TAG = "HomeViewModel";
 
@@ -37,10 +39,12 @@ public class HomeViewModel extends ViewModel {
     @Inject
     public HomeViewModel(ApiRepository apiRepository) {
         mText = new MutableLiveData<>();
-        mText.setValue("Dagger home fragment");
+        mText.setValue("Enter Student Details");
 
         cityList = new MutableLiveData<>();
         stateList = new MutableLiveData<>();
+        successLiveData = new MutableLiveData<>();
+        errorLiveData = new MutableLiveData<>();
 
         this.apiRepository = apiRepository;
         disposable = new CompositeDisposable();
@@ -70,6 +74,14 @@ public class HomeViewModel extends ViewModel {
         return stateList;
     }
 
+    public LiveData<Boolean> getSuccessLiveData(){
+        return successLiveData;
+    }
+
+    public LiveData<Boolean> getErrorLiveData(){
+        return errorLiveData;
+    }
+
     public void makePostApiCall(String fName, String lName, String email, String phone){
         request.setFirstName(fName);
         request.setLastName(lName);
@@ -86,11 +98,13 @@ public class HomeViewModel extends ViewModel {
                             @Override
                             public void onSuccess(JsonResponse jsonResponse) {
                                 Log.e(TAG, "onSuccess: " + jsonResponse );
+                                successLiveData.setValue(true);
                             }
 
                             @Override
                             public void onError(Throwable e) {
                                 Log.e(TAG, "onError: "+e );
+                                errorLiveData.setValue(true);
                             }
                         })
         );
