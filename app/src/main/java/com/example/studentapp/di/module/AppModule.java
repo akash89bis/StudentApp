@@ -1,5 +1,6 @@
 package com.example.studentapp.di.module;
 
+import com.example.studentapp.model.StudentDetailsRequest;
 import com.example.studentapp.network.ApiInterface;
 
 import dagger.Module;
@@ -25,5 +26,10 @@ public class AppModule {
     @Provides
     static ApiInterface provideRetrofitService(Retrofit retrofit) {
         return retrofit.create(ApiInterface.class);
+    }
+
+    @Provides
+    static StudentDetailsRequest providesStudentDetailsRequest(){
+        return new StudentDetailsRequest();
     }
 }
