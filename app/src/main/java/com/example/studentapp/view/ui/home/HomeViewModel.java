@@ -1,5 +1,7 @@
 package com.example.studentapp.view.ui.home;
 
+import android.text.Editable;
+import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -54,7 +56,7 @@ public class HomeViewModel extends ViewModel {
         return mText;
     }
 
-    public LiveData<List<String>> getCityList(){
+    public LiveData<List<String>> getCityList() {
         List<String> cityL = new ArrayList<>();
         cityL.add("Kolkata");
         cityL.add("Bhubaneshwar");
@@ -64,7 +66,7 @@ public class HomeViewModel extends ViewModel {
         return cityList;
     }
 
-    public LiveData<List<String>> getStateList(){
+    public LiveData<List<String>> getStateList() {
         List<String> stateL = new ArrayList<>();
         stateL.add("West Bengal");
         stateL.add("Odissa");
@@ -74,19 +76,19 @@ public class HomeViewModel extends ViewModel {
         return stateList;
     }
 
-    public LiveData<Boolean> getSuccessLiveData(){
+    public LiveData<Boolean> getSuccessLiveData() {
         return successLiveData;
     }
 
-    public LiveData<Boolean> getErrorLiveData(){
+    public LiveData<Boolean> getErrorLiveData() {
         return errorLiveData;
     }
 
-    public void makePostApiCall(String fName, String lName, String email, String phone){
+    public void makePostApiCall(String fName, String lName, String email, String phone) {
         request.setFirstName(fName);
         request.setLastName(lName);
         request.setEmail(email);
-        request.setPhoneNum(Integer.parseInt(phone));
+        request.setPhoneNum(Double.parseDouble(phone));
         request.setSex("Male");
 
         disposable.add(
@@ -97,13 +99,13 @@ public class HomeViewModel extends ViewModel {
 
                             @Override
                             public void onSuccess(JsonResponse jsonResponse) {
-                                Log.e(TAG, "onSuccess: " + jsonResponse );
+                                Log.e(TAG, "onSuccess: " + jsonResponse);
                                 successLiveData.setValue(true);
                             }
 
                             @Override
                             public void onError(Throwable e) {
-                                Log.e(TAG, "onError: "+e );
+                                Log.e(TAG, "onError: " + e);
                                 errorLiveData.setValue(true);
                             }
                         })
@@ -111,5 +113,35 @@ public class HomeViewModel extends ViewModel {
     }
 
 
+    String validateEditTextForEmail(Editable text) {
+        if (!TextUtils.isEmpty(text)) {
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(text).matches()) {
+                return "Incorrect email address";
+            } else {
+                return null;
+            }
+        } else {
+            return "Email cannot be blank";
+        }
+    }
 
+    String validateEditTextForName(Editable text) {
+        if (!TextUtils.isEmpty(text)) {
+            return null;
+        } else {
+            return "Name cannot be blank";
+        }
+    }
+
+    String validateEditTextForPhone(String text) {
+        if (!TextUtils.isEmpty(text)) {
+            if (!text.matches("[1-9][0-9]{9}")) {
+                return "Incorrect phone no.";
+            } else {
+                return null;
+            }
+        } else {
+            return "Phone no. cannot be blank";
+        }
+    }
 }
