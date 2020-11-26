@@ -1,6 +1,10 @@
 package com.example.studentapp.view.ui.home;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +23,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.studentapp.R;
 import com.example.studentapp.factory.ViewModelFactory;
+import com.example.studentapp.view.util.NameFilter;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.List;
 import java.util.Timer;
@@ -46,6 +52,7 @@ public class HomeFragment extends DaggerFragment {
     private EditText edt_phone;
     private Button btnSubmit;
     private ProgressBar progressBar;
+    private TextInputLayout txt_input_email;
     private final int DELAY = 2000;
     private static final String TAG = "HomeFragment";
 
@@ -86,9 +93,28 @@ public class HomeFragment extends DaggerFragment {
         });
 
         edt_first_name = root.findViewById(R.id.edt_first_name);
+        edt_first_name.setInputType(InputType.TYPE_CLASS_TEXT);
+        edt_first_name.setFilters( new InputFilter[]{ new NameFilter()}) ;
+
+        txt_input_email = root.findViewById(R.id.txt_input_email);
+
         edt_email = root.findViewById(R.id.edt_email);
+        edt_email.setInputType(InputType.TYPE_CLASS_TEXT);
+        edt_email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (!hasFocus) {
+                    validateEditText(((EditText) view).getText());
+                }
+            }
+        });
+
         edt_last_name = root.findViewById(R.id.edt_last_name);
+        edt_last_name.setInputType(InputType.TYPE_CLASS_TEXT);
+        edt_last_name.setFilters( new InputFilter[]{ new NameFilter()}) ;
+
         edt_phone = root.findViewById(R.id.edt_phone);
+
         btnSubmit = root.findViewById(R.id.button);
         progressBar = root.findViewById(R.id.progressBar);
 
@@ -129,6 +155,20 @@ public class HomeFragment extends DaggerFragment {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    private void validateEditText(Editable text) {
+        if (!TextUtils.isEmpty(text)) {
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(text).matches()) {
+                txt_input_email.setError("Incorrect Email address");
+            }
+            else{
+                txt_input_email.setError(null);
+            }
+        }
+        else{
+            txt_input_email.setError("Email cannot be null");
+        }
     }
 }
 
