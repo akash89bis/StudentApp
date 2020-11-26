@@ -5,7 +5,7 @@ public class StudentDetailsRequest {
     private String firstName;
     private String lastName;
     private String email;
-    private int phoneNumber;
+    private double phoneNumber;
     private String sex;
 
     public void setFirstName(String firstName) {
@@ -20,7 +20,7 @@ public class StudentDetailsRequest {
         this.email = email;
     }
 
-    public void setPhoneNum(int phoneNum) {
+    public void setPhoneNum(double phoneNum) {
         this.phoneNumber = phoneNum;
     }
 

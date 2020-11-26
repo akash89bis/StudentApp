@@ -1,10 +1,17 @@
 package com.example.studentapp.view.ui.home;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.InputType;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,7 +26,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.studentapp.R;
 import com.example.studentapp.factory.ViewModelFactory;
+import com.example.studentapp.view.util.NameFilter;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.List;
 import java.util.Timer;
@@ -46,8 +55,13 @@ public class HomeFragment extends DaggerFragment {
     private EditText edt_phone;
     private Button btnSubmit;
     private ProgressBar progressBar;
+    private TextInputLayout txt_input_email;
     private final int DELAY = 2000;
     private static final String TAG = "HomeFragment";
+    private String fNameValidation;
+    private String lNameValidation;
+    private String emailValidation;
+    private String phnNoValidation;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -86,9 +100,121 @@ public class HomeFragment extends DaggerFragment {
         });
 
         edt_first_name = root.findViewById(R.id.edt_first_name);
+        edt_first_name.setInputType(InputType.TYPE_CLASS_TEXT);
+        edt_first_name.setFilters( new InputFilter[]{ new NameFilter()});
+        edt_first_name.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                edt_first_name.setError(homeViewModel.validateEditTextForName(edt_first_name.getText()));
+                fNameValidation = homeViewModel.validateEditTextForName(edt_first_name.getText());
+                checkRequiredFields();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        txt_input_email = root.findViewById(R.id.txt_input_email);
+
         edt_email = root.findViewById(R.id.edt_email);
+        edt_email.setInputType(InputType.TYPE_CLASS_TEXT);
+        edt_email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                emailValidation = homeViewModel.validateEditTextForEmail(edt_email.getText());
+                checkRequiredFields();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        edt_email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (!hasFocus) {
+                    txt_input_email.setError(homeViewModel.validateEditTextForEmail(edt_email.getText()));
+                    emailValidation = homeViewModel.validateEditTextForEmail(edt_email.getText());
+                    checkRequiredFields();
+                }
+            }
+        });
         edt_last_name = root.findViewById(R.id.edt_last_name);
+        edt_last_name.setInputType(InputType.TYPE_CLASS_TEXT);
+        edt_last_name.setFilters( new InputFilter[]{ new NameFilter()}) ;
+        edt_last_name.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                edt_last_name.setError(homeViewModel.validateEditTextForName(edt_last_name.getText()));
+                lNameValidation = homeViewModel.validateEditTextForName(edt_last_name.getText());
+                checkRequiredFields();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         edt_phone = root.findViewById(R.id.edt_phone);
+        edt_phone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                edt_phone.setError(homeViewModel.validateEditTextForPhone(edt_phone.getText().toString()));
+                phnNoValidation = homeViewModel.validateEditTextForPhone(edt_phone.getText().toString());
+                checkRequiredFields();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        edt_phone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (!hasFocus) {
+                    edt_phone.setError(homeViewModel.validateEditTextForPhone(((EditText) view).getText().toString()));
+                    phnNoValidation = homeViewModel.validateEditTextForPhone(((EditText) view).getText().toString());
+                }
+            }
+        });
+        edt_phone.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if(i== EditorInfo.IME_ACTION_DONE){
+                    edt_phone.setError(homeViewModel.validateEditTextForPhone(((EditText) textView).getText().toString()));
+                    phnNoValidation = homeViewModel.validateEditTextForPhone(((EditText) textView).getText().toString());
+                    checkRequiredFields();
+                }
+                return false;
+            }
+        });
+
         btnSubmit = root.findViewById(R.id.button);
         progressBar = root.findViewById(R.id.progressBar);
 
@@ -129,6 +255,19 @@ public class HomeFragment extends DaggerFragment {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    private void checkRequiredFields() {
+        if(!TextUtils.isEmpty(edt_first_name.getText().toString()) && !TextUtils.isEmpty(edt_last_name.getText().toString()) &&
+                !TextUtils.isEmpty(edt_email.getText().toString()) && !TextUtils.isEmpty(edt_phone.getText().toString())){
+            if (fNameValidation != null || lNameValidation != null || emailValidation != null || phnNoValidation != null) {
+                btnSubmit.setEnabled(false);
+            } else {
+                btnSubmit.setEnabled(true);
+            }
+        }else{
+            btnSubmit.setEnabled(false);
+        }
     }
 }
 

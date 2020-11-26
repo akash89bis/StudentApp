@@ -17,49 +17,85 @@
         app:layout_constraintStart_toEndOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/edt_first_name"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:layout_marginStart="8dp"
+        android:id="@+id/txt_input_first_name"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:importantForAutofill="no"
-        android:hint="Enter first name"
-        app:layout_constraintStart_toEndOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/text_home" />
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        app:layout_constraintTop_toBottomOf="@+id/text_home"
+        app:layout_constraintStart_toEndOf="@+id/guideline">
 
-    <EditText
-        android:id="@+id/edt_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="email"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        app:layout_constraintTop_toBottomOf="@+id/edt_first_name"
-        app:layout_constraintEnd_toEndOf="@+id/edt_first_name" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edt_first_name"
+            android:importantForAutofill="no"
+            android:hint="Enter first name" />
 
-    <EditText
-        android:id="@+id/edt_last_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:importantForAutofill="no"
-        android:hint="Enter last name"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        app:layout_constraintTop_toBottomOf="@+id/edt_email"
-        app:layout_constraintEnd_toEndOf="@+id/edt_email" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/edt_phone"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
-        android:hint="Enter phn. no."
+        android:id="@+id/txt_input_email"
+        app:layout_constraintTop_toBottomOf="@+id/txt_input_last_name"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
-        app:layout_constraintTop_toBottomOf="@+id/edt_last_name"
-        app:layout_constraintEnd_toEndOf="@+id/edt_last_name" />
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        app:layout_constraintStart_toEndOf="@+id/guideline">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edt_email"
+            android:importantForAutofill="no"
+            android:hint="Enter email" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_input_last_name"
+        app:layout_constraintTop_toBottomOf="@+id/txt_input_first_name"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        app:layout_constraintStart_toEndOf="@+id/guideline">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edt_last_name"
+            android:importantForAutofill="no"
+            android:hint="Enter last name" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_input_phone_no"
+        app:layout_constraintTop_toBottomOf="@+id/txt_input_email"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        app:layout_constraintStart_toEndOf="@+id/guideline">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edt_phone"
+            android:inputType="number"
+            android:imeOptions="actionDone"
+            android:maxLength="10"
+            android:singleLine="true"
+            android:importantForAutofill="no"
+            android:hint="Enter phn no." />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <RadioGroup
         android:id="@+id/rdo_group"
@@ -69,7 +105,7 @@
         android:visibility="gone"
         android:orientation="horizontal"
         app:layout_constraintStart_toEndOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/edt_phone">
+        app:layout_constraintTop_toBottomOf="@+id/txt_input_phone_no">
 
         <RadioButton
             android:id="@+id/rdo_male"
@@ -147,6 +183,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:enabled="false"
         android:layout_marginBottom="16dp"
         android:text="Submit"
         app:layout_constraintBottom_toBottomOf="parent"
