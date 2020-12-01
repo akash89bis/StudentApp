@@ -23,6 +23,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.studentapp.R;
 import com.example.studentapp.factory.ViewModelFactory;
@@ -243,6 +245,8 @@ public class HomeFragment extends DaggerFragment {
                 btnSubmit.setEnabled(true);
                 Snackbar.make(getView(), "Data inserted successfully !", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                navController.navigate(R.id.nav_slideshow);
             }
         });
 
