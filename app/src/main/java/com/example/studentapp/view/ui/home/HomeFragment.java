@@ -23,6 +23,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.studentapp.R;
 import com.example.studentapp.factory.ViewModelFactory;
@@ -176,24 +178,6 @@ public class HomeFragment extends DaggerFragment {
         });
 
         edt_phone = root.findViewById(R.id.edt_phone);
-        edt_phone.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                edt_phone.setError(homeViewModel.validateEditTextForPhone(edt_phone.getText().toString()));
-                phnNoValidation = homeViewModel.validateEditTextForPhone(edt_phone.getText().toString());
-                checkRequiredFields();
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
         edt_phone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
@@ -243,6 +227,8 @@ public class HomeFragment extends DaggerFragment {
                 btnSubmit.setEnabled(true);
                 Snackbar.make(getView(), "Data inserted successfully !", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                navController.navigate(R.id.nav_slideshow);
             }
         });
 
