@@ -178,24 +178,6 @@ public class HomeFragment extends DaggerFragment {
         });
 
         edt_phone = root.findViewById(R.id.edt_phone);
-        edt_phone.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                edt_phone.setError(homeViewModel.validateEditTextForPhone(edt_phone.getText().toString()));
-                phnNoValidation = homeViewModel.validateEditTextForPhone(edt_phone.getText().toString());
-                checkRequiredFields();
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
         edt_phone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {

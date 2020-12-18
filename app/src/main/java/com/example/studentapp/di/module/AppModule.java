@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AppModule {
 
 
-    private final static String BASE_URL = "http://192.168.0.108:2020/";
+    private final static String BASE_URL = "http://192.168.0.107:2020/";
 
     @Provides
     static Retrofit provideRetrofit() {
